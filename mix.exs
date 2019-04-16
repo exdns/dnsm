@@ -21,7 +21,6 @@ defmodule Dnsm.MixProject do
   defp deps do
     [
       {:erlbase32, github: "exdns/erlbase32"},
-      {:asn1, github: "exdns/asn1"},
       {:recase, "~> 0.4.0"}
     ]
   end

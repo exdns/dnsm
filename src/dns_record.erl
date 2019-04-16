@@ -196,11 +196,6 @@ hex_to_bin(Bin) when is_binary(Bin) ->
 
 -ifdef(TEST).
 
-dnssec_cases() ->
-    {ok, Cases} = file:consult(filename:join(prefix(), "dnssec_samples.txt")),
-    [ {ZoneName, dns:decode_message(Bin)}
-      || {ZoneName, _RawKeys, Bin} <- Cases ].
-
 optrr_cases() ->
     [ {atom_to_list(element(1, Opt)),
        #dns_message{additional = [#dns_optrr{data = [Opt]}]}}
@@ -230,8 +225,6 @@ tests(Cases, Serialise, Deserialise) ->
 
 erl_tests(Cases) -> tests(Cases, fun serialise/1, fun deserialise/1).
 
-serialise_dnssec_test_() -> erl_tests(dnssec_cases()).
-
 serialise_optrr_test_() -> erl_tests(optrr_cases()).
 
 serialise_rrdata_test_() -> erl_tests(rrdata_cases()).
@@ -257,8 +250,6 @@ json_tests(Cases) ->
 	{module, ejson} -> tests(Cases, Serialise, Deserialise);
 	{error, nofile} -> []
     end.
-
-json_dnssec_test_() -> json_tests(dnssec_cases()).
 
 json_optrr_test_() -> json_tests(optrr_cases()).
 
